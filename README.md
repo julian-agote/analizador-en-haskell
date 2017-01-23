@@ -17,3 +17,10 @@ Para eliminar elementos de la pila, se hace:
     (dropInt (length (reduce_por tabla_acc y (fst x))) (y:ys)) en donde reduce_por devuelve la parte derecha de la regla por la que se reduce, length devuelve la longitud de esa parte derecha y dropInt elimina de la pila (y:ys) tantos elementos como indica length
     despues se introduce en la pila es estado que indica la funcion busca_ira para el estado en la cabecera de la pila y la variable en la parte izquierda de la regla que devuelve (reduce_a tabla_acc y (fst x)), la secuencia de llamadas completa es:
     ((busca_ira tabla_ira (head (dropInt (if((reduce_por tabla_acc y (fst x))!!0=="lambda") then 0 else (length (reduce_por tabla_acc y (fst x)))) (y:ys))) (reduce_a tabla_acc y (fst x))):(if((reduce_por tabla_acc y (fst x))!!0=="lambda") then (y:ys) else (dropInt (length (reduce_por tabla_acc y (fst x))) (y:ys)))) 
+En el fichero generado falta la funcion que lea el siguiente token de la entrada, una posible secuencia de llamada seria:
+main:: IO ()
+main = do
+        putStrLn "Introduce una cadena:"
+        y <- getLine
+        putStrLn (parser_slr (sigToken y) [1])
+El siguiente paso consiste como indicaba arriba en que el fichero del analizador generado sea en forma de modulo (se cargara con import Analizador) para separar por un lado la parte de analisis y por otro la parte de ejecucion de las acciones semanticas. Va a tener dos funciones externas parser_slr, para comprobar se lee correctamente la entrada y parser_slr_arbol que devuelve un arbol sintactico de la entrada. Se espera a partir de esta representacion intermedia poder luego ejecutar las acciones semanticas. Como se ve en la llamada de arriba sigToken que va a estar en un modulo aparte devuelve una lista con los tokens que forman la entrada.
