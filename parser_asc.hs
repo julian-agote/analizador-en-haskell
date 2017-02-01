@@ -136,8 +136,8 @@ tabla_ira axioma t v p ((Elemento {numero=n,conjunto=c}):xs)= [(Elem_ira {estado
 generar_tabla_ira::[Elem_ira]->String
 generar_tabla_ira []="[]"
 generar_tabla_ira (Elem_ira {estado2=n, var=z, sig_estado2=m}:xs)="(Elem_ira {estado2="++show n++",var=\"" ++z++"\",sig_estado2="++show m++"}):\n       "++(generar_tabla_ira xs)
-generar_parser::String->String->String->String->String
-generar_parser axioma t v p =  "module Analizador(parser_slr,parser_slr_arbol) where\n import Utilidades\nimport Data.Char(ord)\ndata Partes = PIzda String|Pdcha [String]\ntype Regla=(Partes,Partes)\ndata Elem_acc =  Elem_acc {estado::Int, term::String, accion::String, regla::Regla, sig_estado::Int}\ntabla_acc::[Elem_acc]\n"++
+generar_parser::String->String->String->String->String->String
+generar_parser axioma t v p nom =  "module "++nom++"(parser_slr,parser_slr_arbol) where\nimport Utilidades\nimport Arbol\ndata Partes = PIzda String|Pdcha [String]\ntype Regla=(Partes,Partes)\ndata Elem_acc =  Elem_acc {estado::Int, term::String, accion::String, regla::Regla, sig_estado::Int}\ntabla_acc::[Elem_acc]\n"++
                 "tabla_acc="++(generar_tabla (tabla_acc axioma t v p (calc_colec_slr t v p axioma [Elemento {numero = 1,conjunto = cerradura t v p axioma ((PIzda ("P"++axioma),Pdcha [".",axioma]):[])}])))++
                 "\ndata Elem_ira =  Elem_ira {estado2::Int, var::String, sig_estado2::Int}\ntabla_ira::[Elem_ira]\ntabla_ira="++(generar_tabla_ira (tabla_ira axioma t v p (calc_colec_slr t v p axioma [Elemento {numero = 1,conjunto = cerradura t v p axioma ((PIzda ("P"++axioma),Pdcha [".",axioma]):[])}])))++
                 "\naxioma::String\naxioma=\"P"++axioma++"\"\nterminales::[String]\nterminales = ["++(substr (concat["\""++x++"\","|x<-split ' ' t]) 1 (length (concat["\""++x++"\","|x<-split ' ' t])-1))++"]\n"++
@@ -150,9 +150,9 @@ generar_parser axioma t v p =  "module Analizador(parser_slr,parser_slr_arbol) w
                 "busca_accion (Elem_acc {estado=n,term=z,accion=acc,regla=r,sig_estado=m}:xs) e t = if(n==e && t==z) then acc else busca_accion xs e t\n"++
                 "busca_accion [] _ _ = \"error\"\n"++
                 "desplazar_a::[Elem_acc]->Int->String->Int\n"++
-                "desplazar_a (Elem_acc {estado=n,term=z,accion=\"desplazar\",regla=r,sig_estado=m}:xs) e t = if(n==e && t==z) then m else desplazar_a xs e t\n"++
+                "desplazar_a (Elem_acc {estado=n,term=z,accion=acc,regla=r,sig_estado=m}:xs) e t = if(n==e && t==z) then m else desplazar_a xs e t\n"++
                 "reduce_por::[Elem_acc]->Int->String->[String]\n"++
-                "reduce_por (Elem_acc {estado=n,term=z,accion=\"reducir\",regla=(PIzda a,Pdcha beta),sig_estado=m}:xs) e t = if(n==e && t==z) then beta else reduce_por xs e t\n"++
+                "reduce_por (Elem_acc {estado=n,term=z,accion=acc,regla=(PIzda a,Pdcha beta),sig_estado=m}:xs) e t = if(n==e && t==z) then beta else reduce_por xs e t\n"++
                 "reduce_a::[Elem_acc]->Int->String->String\n"++
                 "reduce_a (Elem_acc {estado=n,term=z,accion=acc,regla=(PIzda a,Pdcha beta),sig_estado=m}:xs) e t = if(n==e && t==z) then a else reduce_a xs e t\n"++
                 "visualizar_pila::[Int]->String\n"++
@@ -172,15 +172,15 @@ generar_parser axioma t v p =  "module Analizador(parser_slr,parser_slr_arbol) w
                 "                      |(busca_accion tabla_acc y (fst x))==\"aceptar\"   = \"entrada correcta\" \n"++ 
                 "                      |(busca_accion tabla_acc y (fst x))==\"error\"       = (visualizar_pila (y:ys))++\"      \"++(visualizar_resto_entrada (x:xs))++\n"++
                 "                                                                            \"falta entrada en la tabla accion, estado=\"++(show y)++\", terminal=\"++(fst x)\n"++
-                "data Arbolsintactico = Hoja (String,String)|Rama String [Arbolsintactico]|Rama_vacia Sting\n"++
-                "parser_slr_arbol::[(String,String)]->[Int]->[Arbolsintactico]->[Arbolsintactico]\n"++
-                "parser_slr_arbol (x:xs) (y:ys) pila_sem |(busca_accion tabla_acc y (fst x))==\"desplazar\" = parser_slr_arbol xs ((desplazar_a tabla_acc y (fst x)):y:ys) (Hoja x):pila_sem\n"++
+                "parser_slr_arbol::[(String,String)]->[Int]->[Arbolsintactico]->Arbolsintactico\n"++
+                "parser_slr_arbol (x:xs) (y:ys) pila_sem |(busca_accion tabla_acc y (fst x))==\"desplazar\" = parser_slr_arbol xs ((desplazar_a tabla_acc y (fst x)):y:ys) ((devolver_hoja x):pila_sem)\n"++
                 "                        |(busca_accion tabla_acc y (fst x))==\"reducir\"  && \n"++ 
                 "                           (busca_ira tabla_ira (head (dropInt (if((reduce_por tabla_acc y (fst x))!!0==\"lambda\") then 0 else (length (reduce_por tabla_acc y (fst x)))) (y:ys))) (reduce_a tabla_acc y (fst x)))>0  = \n"++                 
                 "                                parser_slr_arbol (x:xs) ((busca_ira tabla_ira (head (dropInt (if((reduce_por tabla_acc y (fst x))!!0==\"lambda\") then 0 else (length (reduce_por tabla_acc y (fst x)))) (y:ys))) (reduce_a tabla_acc y (fst x))):(if((reduce_por tabla_acc y (fst x))!!0==\"lambda\") then (y:ys) else (dropInt (length (reduce_por tabla_acc y (fst x))) (y:ys)))) \n"++ 
-                "                                                        (if((reduce_por tabla_acc y (fst x))!!0==\"lambda\") then (Rama_vacia (reduce_a tabla_acc y (fst x))):pila_sem else (Rama (reduce_a tabla_acc y (fst x)) (takeInt (length (reduce_por tabla_acc y (fst x))) pila_sem)):(dropInt (length (reduce_por tabla_acc y (fst x))) pila_sem))\n"++
-                "                        |(busca_accion tabla_acc y (fst x))==\"aceptar\"   = pila_sem\n"
-                 
+                "                                                        (if((reduce_por tabla_acc y (fst x))!!0==\"lambda\") then (devolver_rama_vacia (reduce_a tabla_acc y (fst x))):pila_sem else (devolver_rama (reduce_a tabla_acc y (fst x)) (takeInt (length (reduce_por tabla_acc y (fst x))) pila_sem)):(dropInt (length (reduce_por tabla_acc y (fst x))) pila_sem))\n"++
+                "                        |(busca_accion tabla_acc y (fst x))==\"aceptar\"   = (head pila_sem)\n"
+devuelve_nombre x = (substr x 1 ((posb "." 1 1 x)-1))
+capitalize x = if(ord(head x)>=ord('a') && ord(head x)<=ord('z')) then [chr(ord (head x)-32)]++(substr x 2 (length x)) else x                 
 main:: IO ()
 main = do
         [f1,f2] <- getArgs 
@@ -197,6 +197,6 @@ main = do
         --putStrLn (mostrar_primeros (variables var) term prod axioma)
         --putStrLn (mostrar_siguientes (variables var) axioma term prod)
         --putStrLn (concat (showElemento (calc_colec_slr term var prod axioma [Elemento {numero = 1,conjunto = (cerradura term var prod axioma ((PIzda ("P"++axioma),Pdcha [".",axioma]):[]))}])))
-        writeFile f2 (generar_parser axioma term var prod)
+        writeFile f2 (generar_parser axioma term var prod (capitalize (devuelve_nombre f2)))
         hClose h1
                                                             
