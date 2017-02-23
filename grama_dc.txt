@@ -1,26 +1,18 @@
 DC
-id * : [ ] ( ) = lit num nl , crear destruir activacion evento
-DC OBJETO NOMBRE_OB CLASE MENSAJE ITER PARAMETROS CONDICION LISTA RLISTA EXPR_BOOL OPERACION
-DC->OBJETO MENSAJE OBJETO nl DC
-DC->lambda
+id asterisco dos_puntos par_ab par_ce num coma punto_coma
+DC OBJETO NOMBRE_OB CLASE MENSAJE ITER PARAMETROS LISTA RLISTA RDC
+DC-> OBJETO MENSAJE OBJETO RDC
+RDC-> punto_coma OBJETO MENSAJE OBJETO RDC
+RDC->lambda
 OBJETO->NOMBRE_OB CLASE
 NOMBRE_OB->id
 NOMBRE_OB->lambda
-CLASE->: id 
-CLASE->lambda
-MENSAJE->num : ITER id PARAMETROS CONDICION OPERACION
-ITER->*
+CLASE->dos_puntos id 
+MENSAJE->num dos_puntos ITER id PARAMETROS
+ITER->asterisco
 ITER->lambda
-PARAMETROS->( LISTA )
+PARAMETROS->par_ab LISTA par_ce
 LISTA->id RLISTA
 LISTA->lambda
-RLISTA->, id RLISTA
+RLISTA->coma id RLISTA
 RLISTA->lambda 
-CONDICION->[ EXPR_BOOL ]
-CONDICION->lambda
-EXPR_BOOL->id = lit
-OPERACION->crear
-OPERACION->destruir
-OPERACION->activacion
-OPERACION->evento
-OPERACION->lambda

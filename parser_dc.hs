@@ -5,120 +5,83 @@ data Partes = PIzda String|Pdcha [String]
 type Regla=(Partes,Partes)
 data Elem_acc =  Elem_acc {estado::Int, term::String, accion::String, regla::Regla, sig_estado::Int}
 tabla_acc::[Elem_acc]
-tabla_acc=(Elem_acc {estado=1,term=":",accion="reducir",regla=(PIzda "NOMBRE_OB",Pdcha ["lambda"]), sig_estado=0}):
-       (Elem_acc {estado=1,term="num",accion="reducir",regla=(PIzda "NOMBRE_OB",Pdcha ["lambda"]), sig_estado=0}):
-       (Elem_acc {estado=1,term="$",accion="reducir",regla=(PIzda "DC",Pdcha ["lambda"]), sig_estado=0}):
+tabla_acc=(Elem_acc {estado=1,term="dos_puntos",accion="reducir",regla=(PIzda "NOMBRE_OB",Pdcha ["lambda"]), sig_estado=0}):
        (Elem_acc {estado=1,term="id",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=5}):
-       (Elem_acc {estado=2,term="num",accion="reducir",regla=(PIzda "CLASE",Pdcha ["lambda"]), sig_estado=0}):
-       (Elem_acc {estado=2,term=":",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=34}):
+       (Elem_acc {estado=2,term="dos_puntos",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=29}):
        (Elem_acc {estado=3,term="num",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=7}):
        (Elem_acc {estado=4,term="$",accion="aceptar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=0}):
-       (Elem_acc {estado=5,term=":",accion="reducir",regla=(PIzda "NOMBRE_OB",Pdcha ["id"]), sig_estado=0}):
-       (Elem_acc {estado=5,term="num",accion="reducir",regla=(PIzda "NOMBRE_OB",Pdcha ["id"]), sig_estado=0}):
-       (Elem_acc {estado=6,term=":",accion="reducir",regla=(PIzda "NOMBRE_OB",Pdcha ["lambda"]), sig_estado=0}):
-       (Elem_acc {estado=6,term="num",accion="reducir",regla=(PIzda "NOMBRE_OB",Pdcha ["lambda"]), sig_estado=0}):
+       (Elem_acc {estado=5,term="dos_puntos",accion="reducir",regla=(PIzda "NOMBRE_OB",Pdcha ["id"]), sig_estado=0}):
+       (Elem_acc {estado=6,term="dos_puntos",accion="reducir",regla=(PIzda "NOMBRE_OB",Pdcha ["lambda"]), sig_estado=0}):
        (Elem_acc {estado=6,term="id",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=5}):
-       (Elem_acc {estado=7,term=":",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=8}):
+       (Elem_acc {estado=7,term="dos_puntos",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=8}):
        (Elem_acc {estado=8,term="id",accion="reducir",regla=(PIzda "ITER",Pdcha ["lambda"]), sig_estado=0}):
-       (Elem_acc {estado=8,term="*",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=10}):
+       (Elem_acc {estado=8,term="asterisco",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=10}):
        (Elem_acc {estado=9,term="id",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=11}):
-       (Elem_acc {estado=10,term="id",accion="reducir",regla=(PIzda "ITER",Pdcha ["*"]), sig_estado=0}):
-       (Elem_acc {estado=11,term="(",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=13}):
-       (Elem_acc {estado=12,term="crear",accion="reducir",regla=(PIzda "CONDICION",Pdcha ["lambda"]), sig_estado=0}):
-       (Elem_acc {estado=12,term="destruir",accion="reducir",regla=(PIzda "CONDICION",Pdcha ["lambda"]), sig_estado=0}):
-       (Elem_acc {estado=12,term="activacion",accion="reducir",regla=(PIzda "CONDICION",Pdcha ["lambda"]), sig_estado=0}):
-       (Elem_acc {estado=12,term="evento",accion="reducir",regla=(PIzda "CONDICION",Pdcha ["lambda"]), sig_estado=0}):
-       (Elem_acc {estado=12,term="id",accion="reducir",regla=(PIzda "CONDICION",Pdcha ["lambda"]), sig_estado=0}):
-       (Elem_acc {estado=12,term=":",accion="reducir",regla=(PIzda "CONDICION",Pdcha ["lambda"]), sig_estado=0}):
-       (Elem_acc {estado=12,term="nl",accion="reducir",regla=(PIzda "CONDICION",Pdcha ["lambda"]), sig_estado=0}):
-       (Elem_acc {estado=12,term="$",accion="reducir",regla=(PIzda "CONDICION",Pdcha ["lambda"]), sig_estado=0}):
-       (Elem_acc {estado=12,term="[",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=22}):
-       (Elem_acc {estado=13,term=")",accion="reducir",regla=(PIzda "LISTA",Pdcha ["lambda"]), sig_estado=0}):
+       (Elem_acc {estado=10,term="id",accion="reducir",regla=(PIzda "ITER",Pdcha ["asterisco"]), sig_estado=0}):
+       (Elem_acc {estado=11,term="par_ab",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=13}):
+       (Elem_acc {estado=12,term="id",accion="reducir",regla=(PIzda "MENSAJE",Pdcha ["num","dos_puntos","ITER","id","PARAMETROS"]), sig_estado=0}):
+       (Elem_acc {estado=12,term="dos_puntos",accion="reducir",regla=(PIzda "MENSAJE",Pdcha ["num","dos_puntos","ITER","id","PARAMETROS"]), sig_estado=0}):
+       (Elem_acc {estado=12,term="punto_coma",accion="reducir",regla=(PIzda "MENSAJE",Pdcha ["num","dos_puntos","ITER","id","PARAMETROS"]), sig_estado=0}):
+       (Elem_acc {estado=12,term="$",accion="reducir",regla=(PIzda "MENSAJE",Pdcha ["num","dos_puntos","ITER","id","PARAMETROS"]), sig_estado=0}):
+       (Elem_acc {estado=13,term="par_ce",accion="reducir",regla=(PIzda "LISTA",Pdcha ["lambda"]), sig_estado=0}):
        (Elem_acc {estado=13,term="id",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=15}):
-       (Elem_acc {estado=14,term=")",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=20}):
-       (Elem_acc {estado=15,term=")",accion="reducir",regla=(PIzda "RLISTA",Pdcha ["lambda"]), sig_estado=0}):
-       (Elem_acc {estado=15,term=",",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=17}):
-       (Elem_acc {estado=16,term=")",accion="reducir",regla=(PIzda "LISTA",Pdcha ["id","RLISTA"]), sig_estado=0}):
+       (Elem_acc {estado=14,term="par_ce",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=20}):
+       (Elem_acc {estado=15,term="par_ce",accion="reducir",regla=(PIzda "RLISTA",Pdcha ["lambda"]), sig_estado=0}):
+       (Elem_acc {estado=15,term="coma",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=17}):
+       (Elem_acc {estado=16,term="par_ce",accion="reducir",regla=(PIzda "LISTA",Pdcha ["id","RLISTA"]), sig_estado=0}):
        (Elem_acc {estado=17,term="id",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=18}):
-       (Elem_acc {estado=18,term=")",accion="reducir",regla=(PIzda "RLISTA",Pdcha ["lambda"]), sig_estado=0}):
-       (Elem_acc {estado=18,term=",",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=17}):
-       (Elem_acc {estado=19,term=")",accion="reducir",regla=(PIzda "RLISTA",Pdcha [",","id","RLISTA"]), sig_estado=0}):
-       (Elem_acc {estado=20,term="[",accion="reducir",regla=(PIzda "PARAMETROS",Pdcha ["(","LISTA",")"]), sig_estado=0}):
-       (Elem_acc {estado=20,term="crear",accion="reducir",regla=(PIzda "PARAMETROS",Pdcha ["(","LISTA",")"]), sig_estado=0}):
-       (Elem_acc {estado=20,term="destruir",accion="reducir",regla=(PIzda "PARAMETROS",Pdcha ["(","LISTA",")"]), sig_estado=0}):
-       (Elem_acc {estado=20,term="activacion",accion="reducir",regla=(PIzda "PARAMETROS",Pdcha ["(","LISTA",")"]), sig_estado=0}):
-       (Elem_acc {estado=20,term="evento",accion="reducir",regla=(PIzda "PARAMETROS",Pdcha ["(","LISTA",")"]), sig_estado=0}):
-       (Elem_acc {estado=20,term="id",accion="reducir",regla=(PIzda "PARAMETROS",Pdcha ["(","LISTA",")"]), sig_estado=0}):
-       (Elem_acc {estado=20,term=":",accion="reducir",regla=(PIzda "PARAMETROS",Pdcha ["(","LISTA",")"]), sig_estado=0}):
-       (Elem_acc {estado=20,term="nl",accion="reducir",regla=(PIzda "PARAMETROS",Pdcha ["(","LISTA",")"]), sig_estado=0}):
-       (Elem_acc {estado=20,term="$",accion="reducir",regla=(PIzda "PARAMETROS",Pdcha ["(","LISTA",")"]), sig_estado=0}):
-       (Elem_acc {estado=21,term="id",accion="reducir",regla=(PIzda "OPERACION",Pdcha ["lambda"]), sig_estado=0}):
-       (Elem_acc {estado=21,term=":",accion="reducir",regla=(PIzda "OPERACION",Pdcha ["lambda"]), sig_estado=0}):
-       (Elem_acc {estado=21,term="nl",accion="reducir",regla=(PIzda "OPERACION",Pdcha ["lambda"]), sig_estado=0}):
-       (Elem_acc {estado=21,term="$",accion="reducir",regla=(PIzda "OPERACION",Pdcha ["lambda"]), sig_estado=0}):
-       (Elem_acc {estado=21,term="crear",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=32}):
-       (Elem_acc {estado=21,term="destruir",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=31}):
-       (Elem_acc {estado=21,term="activacion",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=30}):
-       (Elem_acc {estado=21,term="evento",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=29}):
-       (Elem_acc {estado=22,term="id",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=24}):
-       (Elem_acc {estado=23,term="]",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=27}):
-       (Elem_acc {estado=24,term="=",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=25}):
-       (Elem_acc {estado=25,term="lit",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=26}):
-       (Elem_acc {estado=26,term="]",accion="reducir",regla=(PIzda "EXPR_BOOL",Pdcha ["id","=","lit"]), sig_estado=0}):
-       (Elem_acc {estado=27,term="crear",accion="reducir",regla=(PIzda "CONDICION",Pdcha ["[","EXPR_BOOL","]"]), sig_estado=0}):
-       (Elem_acc {estado=27,term="destruir",accion="reducir",regla=(PIzda "CONDICION",Pdcha ["[","EXPR_BOOL","]"]), sig_estado=0}):
-       (Elem_acc {estado=27,term="activacion",accion="reducir",regla=(PIzda "CONDICION",Pdcha ["[","EXPR_BOOL","]"]), sig_estado=0}):
-       (Elem_acc {estado=27,term="evento",accion="reducir",regla=(PIzda "CONDICION",Pdcha ["[","EXPR_BOOL","]"]), sig_estado=0}):
-       (Elem_acc {estado=27,term="id",accion="reducir",regla=(PIzda "CONDICION",Pdcha ["[","EXPR_BOOL","]"]), sig_estado=0}):
-       (Elem_acc {estado=27,term=":",accion="reducir",regla=(PIzda "CONDICION",Pdcha ["[","EXPR_BOOL","]"]), sig_estado=0}):
-       (Elem_acc {estado=27,term="nl",accion="reducir",regla=(PIzda "CONDICION",Pdcha ["[","EXPR_BOOL","]"]), sig_estado=0}):
-       (Elem_acc {estado=27,term="$",accion="reducir",regla=(PIzda "CONDICION",Pdcha ["[","EXPR_BOOL","]"]), sig_estado=0}):
-       (Elem_acc {estado=28,term="id",accion="reducir",regla=(PIzda "MENSAJE",Pdcha ["num",":","ITER","id","PARAMETROS","CONDICION","OPERACION"]), sig_estado=0}):
-       (Elem_acc {estado=28,term=":",accion="reducir",regla=(PIzda "MENSAJE",Pdcha ["num",":","ITER","id","PARAMETROS","CONDICION","OPERACION"]), sig_estado=0}):
-       (Elem_acc {estado=28,term="nl",accion="reducir",regla=(PIzda "MENSAJE",Pdcha ["num",":","ITER","id","PARAMETROS","CONDICION","OPERACION"]), sig_estado=0}):
-       (Elem_acc {estado=28,term="$",accion="reducir",regla=(PIzda "MENSAJE",Pdcha ["num",":","ITER","id","PARAMETROS","CONDICION","OPERACION"]), sig_estado=0}):
-       (Elem_acc {estado=29,term="id",accion="reducir",regla=(PIzda "OPERACION",Pdcha ["evento"]), sig_estado=0}):
-       (Elem_acc {estado=29,term=":",accion="reducir",regla=(PIzda "OPERACION",Pdcha ["evento"]), sig_estado=0}):
-       (Elem_acc {estado=29,term="nl",accion="reducir",regla=(PIzda "OPERACION",Pdcha ["evento"]), sig_estado=0}):
-       (Elem_acc {estado=29,term="$",accion="reducir",regla=(PIzda "OPERACION",Pdcha ["evento"]), sig_estado=0}):
-       (Elem_acc {estado=30,term="id",accion="reducir",regla=(PIzda "OPERACION",Pdcha ["activacion"]), sig_estado=0}):
-       (Elem_acc {estado=30,term=":",accion="reducir",regla=(PIzda "OPERACION",Pdcha ["activacion"]), sig_estado=0}):
-       (Elem_acc {estado=30,term="nl",accion="reducir",regla=(PIzda "OPERACION",Pdcha ["activacion"]), sig_estado=0}):
-       (Elem_acc {estado=30,term="$",accion="reducir",regla=(PIzda "OPERACION",Pdcha ["activacion"]), sig_estado=0}):
-       (Elem_acc {estado=31,term="id",accion="reducir",regla=(PIzda "OPERACION",Pdcha ["destruir"]), sig_estado=0}):
-       (Elem_acc {estado=31,term=":",accion="reducir",regla=(PIzda "OPERACION",Pdcha ["destruir"]), sig_estado=0}):
-       (Elem_acc {estado=31,term="nl",accion="reducir",regla=(PIzda "OPERACION",Pdcha ["destruir"]), sig_estado=0}):
-       (Elem_acc {estado=31,term="$",accion="reducir",regla=(PIzda "OPERACION",Pdcha ["destruir"]), sig_estado=0}):
-       (Elem_acc {estado=32,term="id",accion="reducir",regla=(PIzda "OPERACION",Pdcha ["crear"]), sig_estado=0}):
-       (Elem_acc {estado=32,term=":",accion="reducir",regla=(PIzda "OPERACION",Pdcha ["crear"]), sig_estado=0}):
-       (Elem_acc {estado=32,term="nl",accion="reducir",regla=(PIzda "OPERACION",Pdcha ["crear"]), sig_estado=0}):
-       (Elem_acc {estado=32,term="$",accion="reducir",regla=(PIzda "OPERACION",Pdcha ["crear"]), sig_estado=0}):
-       (Elem_acc {estado=33,term="num",accion="reducir",regla=(PIzda "OBJETO",Pdcha ["NOMBRE_OB","CLASE"]), sig_estado=0}):
-       (Elem_acc {estado=34,term="id",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=35}):
-       (Elem_acc {estado=35,term="num",accion="reducir",regla=(PIzda "CLASE",Pdcha [":","id"]), sig_estado=0}):
+       (Elem_acc {estado=18,term="par_ce",accion="reducir",regla=(PIzda "RLISTA",Pdcha ["lambda"]), sig_estado=0}):
+       (Elem_acc {estado=18,term="coma",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=17}):
+       (Elem_acc {estado=19,term="par_ce",accion="reducir",regla=(PIzda "RLISTA",Pdcha ["coma","id","RLISTA"]), sig_estado=0}):
+       (Elem_acc {estado=20,term="id",accion="reducir",regla=(PIzda "PARAMETROS",Pdcha ["par_ab","LISTA","par_ce"]), sig_estado=0}):
+       (Elem_acc {estado=20,term="dos_puntos",accion="reducir",regla=(PIzda "PARAMETROS",Pdcha ["par_ab","LISTA","par_ce"]), sig_estado=0}):
+       (Elem_acc {estado=20,term="punto_coma",accion="reducir",regla=(PIzda "PARAMETROS",Pdcha ["par_ab","LISTA","par_ce"]), sig_estado=0}):
+       (Elem_acc {estado=20,term="$",accion="reducir",regla=(PIzda "PARAMETROS",Pdcha ["par_ab","LISTA","par_ce"]), sig_estado=0}):
+       (Elem_acc {estado=21,term="$",accion="reducir",regla=(PIzda "RDC",Pdcha ["lambda"]), sig_estado=0}):
+       (Elem_acc {estado=21,term="punto_coma",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=23}):
+       (Elem_acc {estado=22,term="$",accion="reducir",regla=(PIzda "DC",Pdcha ["OBJETO","MENSAJE","OBJETO","RDC"]), sig_estado=0}):
+       (Elem_acc {estado=23,term="dos_puntos",accion="reducir",regla=(PIzda "NOMBRE_OB",Pdcha ["lambda"]), sig_estado=0}):
+       (Elem_acc {estado=23,term="id",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=5}):
+       (Elem_acc {estado=24,term="num",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=7}):
+       (Elem_acc {estado=25,term="dos_puntos",accion="reducir",regla=(PIzda "NOMBRE_OB",Pdcha ["lambda"]), sig_estado=0}):
+       (Elem_acc {estado=25,term="id",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=5}):
+       (Elem_acc {estado=26,term="$",accion="reducir",regla=(PIzda "RDC",Pdcha ["lambda"]), sig_estado=0}):
+       (Elem_acc {estado=26,term="punto_coma",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=23}):
+       (Elem_acc {estado=27,term="$",accion="reducir",regla=(PIzda "RDC",Pdcha ["punto_coma","OBJETO","MENSAJE","OBJETO","RDC"]), sig_estado=0}):
+       (Elem_acc {estado=28,term="num",accion="reducir",regla=(PIzda "OBJETO",Pdcha ["NOMBRE_OB","CLASE"]), sig_estado=0}):
+       (Elem_acc {estado=28,term="punto_coma",accion="reducir",regla=(PIzda "OBJETO",Pdcha ["NOMBRE_OB","CLASE"]), sig_estado=0}):
+       (Elem_acc {estado=28,term="$",accion="reducir",regla=(PIzda "OBJETO",Pdcha ["NOMBRE_OB","CLASE"]), sig_estado=0}):
+       (Elem_acc {estado=29,term="id",accion="desplazar",regla=(PIzda "A",Pdcha ["lambda"]), sig_estado=30}):
+       (Elem_acc {estado=30,term="num",accion="reducir",regla=(PIzda "CLASE",Pdcha ["dos_puntos","id"]), sig_estado=0}):
+       (Elem_acc {estado=30,term="punto_coma",accion="reducir",regla=(PIzda "CLASE",Pdcha ["dos_puntos","id"]), sig_estado=0}):
+       (Elem_acc {estado=30,term="$",accion="reducir",regla=(PIzda "CLASE",Pdcha ["dos_puntos","id"]), sig_estado=0}):
        []
 data Elem_ira =  Elem_ira {estado2::Int, var::String, sig_estado2::Int}
 tabla_ira::[Elem_ira]
 tabla_ira=(Elem_ira {estado2=1,var="DC",sig_estado2=4}):
        (Elem_ira {estado2=1,var="OBJETO",sig_estado2=3}):
        (Elem_ira {estado2=1,var="NOMBRE_OB",sig_estado2=2}):
-       (Elem_ira {estado2=2,var="CLASE",sig_estado2=33}):
+       (Elem_ira {estado2=2,var="CLASE",sig_estado2=28}):
        (Elem_ira {estado2=3,var="MENSAJE",sig_estado2=6}):
-       (Elem_ira {estado2=6,var="OBJETO",sig_estado2=36}):
+       (Elem_ira {estado2=6,var="OBJETO",sig_estado2=21}):
        (Elem_ira {estado2=6,var="NOMBRE_OB",sig_estado2=2}):
        (Elem_ira {estado2=8,var="ITER",sig_estado2=9}):
        (Elem_ira {estado2=11,var="PARAMETROS",sig_estado2=12}):
-       (Elem_ira {estado2=12,var="CONDICION",sig_estado2=21}):
        (Elem_ira {estado2=13,var="LISTA",sig_estado2=14}):
        (Elem_ira {estado2=15,var="RLISTA",sig_estado2=16}):
        (Elem_ira {estado2=18,var="RLISTA",sig_estado2=19}):
-       (Elem_ira {estado2=21,var="OPERACION",sig_estado2=28}):
-       (Elem_ira {estado2=22,var="EXPR_BOOL",sig_estado2=23}):
+       (Elem_ira {estado2=21,var="RDC",sig_estado2=22}):
+       (Elem_ira {estado2=23,var="OBJETO",sig_estado2=24}):
+       (Elem_ira {estado2=23,var="NOMBRE_OB",sig_estado2=2}):
+       (Elem_ira {estado2=24,var="MENSAJE",sig_estado2=25}):
+       (Elem_ira {estado2=25,var="OBJETO",sig_estado2=26}):
+       (Elem_ira {estado2=25,var="NOMBRE_OB",sig_estado2=2}):
+       (Elem_ira {estado2=26,var="RDC",sig_estado2=27}):
        []
 axioma::String
 axioma="PDC"
 terminales::[String]
-terminales = ["id","*",":","[","]","(",")","=","lit","num","nl",",","crear","destruir","activacion","evento"]
+terminales = ["id","asterisco","dos_puntos","par_ab","par_ce","num","coma","punto_coma"]
 busca_ira::[Elem_ira]->Int->String->Int
 busca_ira (Elem_ira {estado2=n,var=z,sig_estado2=m}:xs) e v = if(n==e && v==z) then m else busca_ira xs e v
 busca_ira [] _ _ = -1

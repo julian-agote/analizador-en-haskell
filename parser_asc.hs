@@ -47,8 +47,8 @@ todos_tienen_lambda term prod _ [] = True
 --se define Siguiente(A) para el no terminal A como el cjto. de terminales que pueden aparecer a la dcha de A
 --en alguna forma sentencial derivada del axioma de la gramatica
 siguiente::String->String->String->String->[String]
-siguiente axioma term prod x |x==("P"++axioma) = "$":(elimina_rep (concat [if (pos x 1 1 n)<(length n) then primero_cad term prod axioma (dropInt (pos x 1 1 n) n)++(if (member "lambda" (primero_cad2 term prod axioma (dropInt (pos x 1 1 n) n))) then if not(x==y) then (siguiente axioma term prod y) else [] else []) else if not(x==y) then (siguiente axioma term prod y) else []|(PIzda y, Pdcha n)<-reglascontienen x prod axioma]))
-                           |otherwise = elimina_rep (concat [if (pos x 1 1 n)<(length n) then primero_cad term prod axioma (dropInt (pos x 1 1 n) n)++(if (member "lambda" (primero_cad2 term prod axioma (dropInt (pos x 1 1 n) n))) then if not(x==y) then (siguiente axioma term prod y) else [] else []) else if not(x==y) then (siguiente axioma term prod y) else []|(PIzda y, Pdcha n)<-reglascontienen x prod axioma])
+siguiente axioma term prod x |x==("P"++axioma) = "$":(elimina_rep (concat [concat [if (pos x 1 t n)<(length n) then (primero_cad term prod axioma (dropInt (pos x 1 t n) n))++(if (member "lambda" (primero_cad2 term prod axioma (dropInt (pos x 1 t n) n))) then if not(x==y) then (siguiente axioma term prod y) else [] else []) else if not(x==y) then (siguiente axioma term prod y) else []|t<-[1..2],(pos x 1 t n)>0]|(PIzda y, Pdcha n)<-reglascontienen x prod axioma]))
+                           |otherwise = elimina_rep (concat [concat [if (pos x 1 t n)<(length n) then (primero_cad term prod axioma (dropInt (pos x 1 t n) n))++(if (member "lambda" (primero_cad2 term prod axioma (dropInt (pos x 1 t n) n))) then if not(x==y) then (siguiente axioma term prod y) else [] else []) else if not(x==y) then (siguiente axioma term prod y) else []|t<-[1..2],(pos x 1 t n)>0]|(PIzda y, Pdcha n)<-reglascontienen x prod axioma])
 mostrar_primeros::[String]->String->String->String->String               
 mostrar_primeros (v:vs) term prod axioma = "primero("++v++")={"++(join ',' (elimina_rep (primero term prod axioma v)))++"}\n"++(mostrar_primeros vs term prod axioma)
 mostrar_primeros [] _ _ _ = ""
@@ -60,7 +60,7 @@ showElemento::[Elemento]->[String]
 showElemento []=[]
 showElemento ((Elemento {numero=n,conjunto=c}):xs) = (show n:(map showRegla c))++(showElemento xs)
 ir_a::String->String->String->String->Elemento->String->Reglas
-ir_a t v p axioma (Elemento {numero=n,conjunto=c}) x= cerradura t v p axioma [(PIzda r, Pdcha (avanzarpunto m))|(PIzda r, Pdcha m)<-(filter (contienePdcha x) c),m!!(if ((pos x 1 1 m)==1) then 0 else ((pos x 1 1 m)-2))=="."]
+ir_a t v p axioma (Elemento {numero=n,conjunto=c}) x= cerradura t v p axioma [(PIzda r, Pdcha (avanzarpunto m))|(PIzda r, Pdcha m)<-(filter (contienePdcha x) c),m!!(if ((pos_punto x "." 1 m)==1) then 0 else ((pos_punto x "." 1 m)-2))=="."]
 avanzarpunto::[String]->[String]
 avanzarpunto x = (takeInt ((pos "." 1 1 x)-1) x)++[x!!(pos "." 1 1 x)]++["."]++(dropInt ((pos "." 1 1 x)+1) x)
 cerradura::String->String->String->String->Reglas->Reglas       
@@ -195,8 +195,8 @@ main = do
         putStrLn ("reglas="++concat(map showRegla (producciones prod axioma)))
         --putStrLn ("tabla accion="++generar_tabla (tabla_acc axioma term var prod (calc_colec_slr term var prod axioma [Elemento {numero = 1,conjunto = (cerradura term var prod axioma ((PIzda ("P"++axioma),Pdcha [".",axioma]):[]))}])))
         --putStrLn (mostrar_primeros (variables var) term prod axioma)
-        --putStrLn (mostrar_siguientes (variables var) axioma term prod)
-        --putStrLn (concat (showElemento (calc_colec_slr term var prod axioma [Elemento {numero = 1,conjunto = (cerradura term var prod axioma ((PIzda ("P"++axioma),Pdcha [".",axioma]):[]))}])))
+        --writeFile f2 (mostrar_siguientes (variables var) axioma term prod)
+        --writeFile f2 (concat (showElemento (calc_colec_slr term var prod axioma [Elemento {numero = 1,conjunto = (cerradura term var prod axioma ((PIzda ("P"++axioma),Pdcha [".",axioma]):[]))}])))
         writeFile f2 (generar_parser axioma term var prod (capitalize (devuelve_nombre f2)))
         hClose h1
                                                             

@@ -1,4 +1,4 @@
-module Utilidades(takeInt,dropInt,member,pos,posb,split,join,rtrim,trim,substr,instrb,replace,cuentaVerd,elimina_rep) where 
+module Utilidades(takeInt,dropInt,member,pos_punto,pos,posb,split,join,rtrim,trim,substr,instrb,replace,cuentaVerd,elimina_rep) where 
 takeInt:: Int -> [a] -> [a]
 takeInt 0 _ = []
 takeInt _ [] = []
@@ -25,26 +25,30 @@ lista 1 c = [c]
 lista n c = c:lista (n-1) c
 decode [(_,' ')]=[]
 decode []=[]
-decode ((n,c):ns)=(lista n c)++decode ns		       
+decode ((n,c):ns)=(lista n c)++decode ns               
 member::Eq a =>a->[a]->Bool
 member x [] = False
 member x (e:es) |x==e = True
                        |otherwise = member x es
+pos_punto::Eq a=>a->a->Int->[a]->Int
+pos_punto x b c []=0
+pos_punto x b c (e:es) | (x==e && not ((b `elem` es) && (x `elem` es))) = c
+        |otherwise = pos_punto x b (c+1) es
 pos::Eq a=>a->Int->Int->[a]->Int
 pos x c _ []=0
 pos x c 1 (e:es) | x==e = c
-		|otherwise = pos x (c+1) 1 es
+        |otherwise = pos x (c+1) 1 es
 pos x c m (e:es) | x==e = pos x (c+1) (m-1) es
-		|otherwise = pos x (c+1) m es
+        |otherwise = pos x (c+1) m es
 posb::[Char]->Int->Int->[Char]->Int
 posb y c _ []=0
 posb y c 1 x | (substr x 1 (length y))==y = c
-		|otherwise = posb y (c+1) 1 (tail x)
+        |otherwise = posb y (c+1) 1 (tail x)
 posb y c m x | (substr x 1 (length y))==y = posb y (c+(length y)) (m-1) (dropInt (length y) x)
-		|otherwise = posb y (c+1) m (tail x)
+        |otherwise = posb y (c+1) m (tail x)
 split::Char->[Char]->[[Char]]
-split x [] = []		 
-split x l = takeInt (if (pos x 1 1 (trim l))==0 then length (trim l) else ((pos x 1 1 (trim l))-1)) (trim l):split x (dropInt (if (pos x 1 1 (trim l))==0 then length (trim l) else (pos x 1 1 (trim l))) (trim l))		
+split x [] = []      
+split x l = takeInt (if (pos x 1 1 (trim l))==0 then length (trim l) else ((pos x 1 1 (trim l))-1)) (trim l):split x (dropInt (if (pos x 1 1 (trim l))==0 then length (trim l) else (pos x 1 1 (trim l))) (trim l))     
 join::Char->[String]->String
 join x [] = ""
 join x (e:es) = e++[x]++join x es
@@ -67,4 +71,4 @@ replace x y z | (instrb x y 1 1)>0= takeInt ((instrb x y 1 1)-1) x ++z++replace 
 elimina_rep::[String]->[String]
 elimina_rep (x:xs) = if (member x xs) then elimina_rep xs else x:(elimina_rep xs)
 elimina_rep []=[]
-		       
+               
