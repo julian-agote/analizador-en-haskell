@@ -13,7 +13,7 @@ obtener_regla_aplicable (Rama a x)=a++" -> "++(rtrim (parte_izda (reverse x)))
 obtener_regla_aplicable (Hoja (a,b))=a 
 obtener_regla_aplicable (Rama_vacia a)=a++" -> "     
 devolver_ramas::Arbolsintactico->[Arbolsintactico]  
-devolver_ramas (Rama a x) = x
+devolver_ramas (Rama a x) = (reverse x)
 devolver_valor::Arbolsintactico->Int
 devolver_valor (Hoja (a,b))=(convertir_a_entero b)
 devolver_id::Arbolsintactico->String
