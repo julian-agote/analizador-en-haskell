@@ -1,6 +1,27 @@
 module Parser_dc(parser_slr,parser_slr_arbol) where
 import Utilidades
 import Arbol
+--------------- Gramatica: -------------------------------------------------
+-- DC
+-- id asterisco dos_puntos par_ab par_ce num coma punto_coma 
+-- DC OBJETO NOMBRE_OB CLASE MENSAJE ITER PARAMETROS LISTA RLISTA RDC 
+--DC -> OBJETO MENSAJE OBJETO RDC
+--RDC -> punto_coma OBJETO MENSAJE OBJETO RDC
+--RDC -> lambda
+--OBJETO -> NOMBRE_OB CLASE
+--NOMBRE_OB -> id
+--NOMBRE_OB -> lambda
+--CLASE -> dos_puntos id
+--MENSAJE -> num dos_puntos ITER id PARAMETROS
+--ITER -> asterisco
+--ITER -> lambda
+--PARAMETROS -> par_ab LISTA par_ce
+--LISTA -> id RLISTA
+--LISTA -> lambda
+--RLISTA -> coma id RLISTA
+--RLISTA -> lambda
+--PDC -> DC
+----------------------------------------------------------------------------
 data Partes = PIzda String|Pdcha [String]
 type Regla=(Partes,Partes)
 data Elem_acc =  Elem_acc {estado::Int, term::String, accion::String, regla::Regla, sig_estado::Int}
