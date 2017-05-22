@@ -1,0 +1,10 @@
+siguiente(DC)={$,}
+siguiente(OBJETO)={num,punto_coma,$,}
+siguiente(NOMBRE_OB)={dos_puntos,}
+siguiente(CLASE)={num,punto_coma,$,}
+siguiente(MENSAJE)={id,dos_puntos,punto_coma,$,}
+siguiente(ITER)={id,}
+siguiente(PARAMETROS)={id,dos_puntos,punto_coma,$,}
+siguiente(LISTA)={par_ce,}
+siguiente(RLISTA)={par_ce,}
+siguiente(RDC)={$,}
