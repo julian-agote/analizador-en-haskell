@@ -69,6 +69,6 @@ replace x y z | (instrb x y 1 1)>0= takeInt ((instrb x y 1 1)-1) x ++z++replace 
                   |otherwise = x
 -- elimina los elementos que aparecen repetidos en una lista
 elimina_rep::[String]->[String]
-elimina_rep (x:xs) = if (member x xs) then elimina_rep xs else x:(elimina_rep xs)
+elimina_rep (x:xs) = if(null x) then elimina_rep xs else if (member x xs) then elimina_rep xs else x:(elimina_rep xs)
 elimina_rep []=[]
                

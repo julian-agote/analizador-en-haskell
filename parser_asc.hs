@@ -137,7 +137,14 @@ generar_tabla_ira::[Elem_ira]->String
 generar_tabla_ira []="[]"
 generar_tabla_ira (Elem_ira {estado2=n, var=z, sig_estado2=m}:xs)="(Elem_ira {estado2="++show n++",var=\"" ++z++"\",sig_estado2="++show m++"}):\n       "++(generar_tabla_ira xs)
 generar_parser::String->String->String->String->String->String
-generar_parser axioma t v p nom =  "module "++nom++"(parser_slr,parser_slr_arbol) where\nimport Utilidades\nimport Arbol\ndata Partes = PIzda String|Pdcha [String]\ntype Regla=(Partes,Partes)\ndata Elem_acc =  Elem_acc {estado::Int, term::String, accion::String, regla::Regla, sig_estado::Int}\ntabla_acc::[Elem_acc]\n"++
+generar_parser axioma t v p nom =  "module "++nom++"(parser_slr,parser_slr_arbol,visualizar_resto_entrada) where\nimport Utilidades\nimport Arbol\n"++
+                "--------------- Gramatica: -------------------------------------------------\n"++
+                "-- "++axioma++"\n"++
+                "-- "++(join ' ' (terminales t))++"\n"++
+                "-- "++(join ' ' (variables v))++"\n"++
+                concat[(++) "--" r|r<-(map showRegla (producciones p axioma))]++
+                "----------------------------------------------------------------------------\n"++
+                "data Partes = PIzda String|Pdcha [String]\ntype Regla=(Partes,Partes)\ndata Elem_acc =  Elem_acc {estado::Int, term::String, accion::String, regla::Regla, sig_estado::Int}\ntabla_acc::[Elem_acc]\n"++
                 "tabla_acc="++(generar_tabla (tabla_acc axioma t v p (calc_colec_slr t v p axioma [Elemento {numero = 1,conjunto = cerradura t v p axioma ((PIzda ("P"++axioma),Pdcha [".",axioma]):[])}])))++
                 "\ndata Elem_ira =  Elem_ira {estado2::Int, var::String, sig_estado2::Int}\ntabla_ira::[Elem_ira]\ntabla_ira="++(generar_tabla_ira (tabla_ira axioma t v p (calc_colec_slr t v p axioma [Elemento {numero = 1,conjunto = cerradura t v p axioma ((PIzda ("P"++axioma),Pdcha [".",axioma]):[])}])))++
                 "\naxioma::String\naxioma=\"P"++axioma++"\"\nterminales::[String]\nterminales = ["++(substr (concat["\""++x++"\","|x<-split ' ' t]) 1 (length (concat["\""++x++"\","|x<-split ' ' t])-1))++"]\n"++

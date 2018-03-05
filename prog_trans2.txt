@@ -1,0 +1,2 @@
+X [A (0 0 1 1) B (2 0 1 1) C (2 3 1 1) D (0 2 1 1) E (0 0 0 1) F (2 0 0 1) G (2 3 0 1) H (0 2 0 1)] (A B) (A E) (A D) (B C) (B F) (C D) (C G) (D H) (E H) (E F) (F G)
+(G H);XP = X biraketa x 90 biraketa y 90

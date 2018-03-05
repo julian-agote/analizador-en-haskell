@@ -1,0 +1,39 @@
+
+.\Arbol.hs,317
+ArbolsintacticoArbolsintactico4,182
+obtener_regla_aplicableobtener_regla_aplicable12,530
+devolver_ramasdevolver_ramas16,752
+devolver_valordevolver_valor18,827
+devolver_iddevolver_id20,913
+devolver_hojadevolver_hoja22,987
+devolver_rama_vaciadevolver_rama_vacia24,1063
+devolver_ramadevolver_rama26,1157
+
+.\Parser_dc.hs,134
+visualizar_resto_entradavisualizar_resto_entrada122,9415
+parser_slrparser_slr125,9590
+parser_slr_arbolparser_slr_arbol136,11572
+
+.\Utilidades.hs,333
+takeInttakeInt3,161
+dropIntdropInt8,279
+cuentaVerdcuentaVerd18,631
+membermember30,1067
+pos_puntopos_punto34,1197
+pospos38,1367
+posbposb44,1563
+splitsplit50,1834
+joinjoin53,2099
+rtrimrtrim56,2167
+trimtrim58,2214
+substrsubstr61,2349
+instrbinstrb65,2560
+replacereplace67,2700
+elimina_repelimina_rep72,2969
+
+prueba_parser_dc.hs,148
+buscaSigTokenbuscaSigToken8,157
+sigTokensigToken30,2091
+evaluarevaluar35,2465
+obtener_las_clasesobtener_las_clases47,4081
+mainmain53,4720

@@ -1,0 +1,43 @@
+prog
+P_PROG ID P_COMA PUNTO PVAR PBEGIN PEND ASIGN PREAD PWRITE PWRITC PWRITL PIF PTHEN P_ELSE PWHILE PDO PFORP PTODO OP_OR OP_AND OP_REL OP_ADIT OP_MULT OP_NOT NUM CAD PAR_ABR PAR_CER
+prog decl lsent sent sentc pelse expr exprp eand eandp erel erelp arit aritp term termp fact rando
+prog -> P_PROG ID P_COMA decl sentc PUNTO
+decl -> lambda
+decl -> PVAR ID P_COMA decl
+sentc -> PBEGIN lsent PEND
+lsent -> lambda
+lsent -> sent lsent
+sent -> P_COMA
+sent -> ID ASIGN expr P_COMA
+sent -> sentc
+sent -> PREAD ID P_COMA
+sent -> PWRITE expr P_COMA
+sent -> PWRITC CAD P_COMA
+sent -> PWRITL P_COMA
+sent -> PIF expr PTHEN sent pelse
+sent -> PWHILE expr PDO sent
+sent -> PDO sent PWHILE expr P_COMA
+sent -> PFORP ID ASIGN expr PTODO expr PDO sent
+pelse -> lambda
+pelse -> P_ELSE sent
+expr -> eand exprp
+exprp -> lambda
+exprp -> OP_OR eand exprp
+eand -> erel eandp
+eandp -> lambda
+eandp -> OP_AND erel eandp
+erel -> arit erelp
+erelp -> lambda
+erelp -> OP_REL arit erelp
+arit -> term aritp
+aritp -> lambda
+aritp -> OP_ADIT term aritp
+term -> fact termp
+termp -> lambda
+termp -> OP_MULT fact termp
+fact -> OP_NOT fact
+fact -> OP_ADIT fact
+fact -> rando
+rando -> NUM
+rando -> ID
+rando -> PAR_ABR expr PAR_CER

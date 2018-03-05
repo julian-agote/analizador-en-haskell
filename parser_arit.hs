@@ -1,6 +1,6 @@
-module Analizador(parser_slr,parser_slr_arbol) where
- import Utilidades
-import Data.Char(ord)
+module Parser_arit(parser_slr,parser_slr_arbol) where
+import Utilidades
+import Arbol
 data Partes = PIzda String|Pdcha [String]
 type Regla=(Partes,Partes)
 data Elem_acc =  Elem_acc {estado::Int, term::String, accion::String, regla::Regla, sig_estado::Int}
@@ -75,9 +75,9 @@ busca_accion::[Elem_acc]->Int->String->String
 busca_accion (Elem_acc {estado=n,term=z,accion=acc,regla=r,sig_estado=m}:xs) e t = if(n==e && t==z) then acc else busca_accion xs e t
 busca_accion [] _ _ = "error"
 desplazar_a::[Elem_acc]->Int->String->Int
-desplazar_a (Elem_acc {estado=n,term=z,accion="desplazar",regla=r,sig_estado=m}:xs) e t = if(n==e && t==z) then m else desplazar_a xs e t
+desplazar_a (Elem_acc {estado=n,term=z,accion=acc,regla=r,sig_estado=m}:xs) e t = if(n==e && t==z) then m else desplazar_a xs e t
 reduce_por::[Elem_acc]->Int->String->[String]
-reduce_por (Elem_acc {estado=n,term=z,accion="reducir",regla=(PIzda a,Pdcha beta),sig_estado=m}:xs) e t = if(n==e && t==z) then beta else reduce_por xs e t
+reduce_por (Elem_acc {estado=n,term=z,accion=acc,regla=(PIzda a,Pdcha beta),sig_estado=m}:xs) e t = if(n==e && t==z) then beta else reduce_por xs e t
 reduce_a::[Elem_acc]->Int->String->String
 reduce_a (Elem_acc {estado=n,term=z,accion=acc,regla=(PIzda a,Pdcha beta),sig_estado=m}:xs) e t = if(n==e && t==z) then a else reduce_a xs e t
 visualizar_pila::[Int]->String
@@ -97,11 +97,10 @@ parser_slr (x:xs) (y:ys)|(busca_accion tabla_acc y (fst x))=="desplazar" = parse
                       |(busca_accion tabla_acc y (fst x))=="aceptar"   = "entrada correcta" 
                       |(busca_accion tabla_acc y (fst x))=="error"       = (visualizar_pila (y:ys))++"      "++(visualizar_resto_entrada (x:xs))++
                                                                             "falta entrada en la tabla accion, estado="++(show y)++", terminal="++(fst x)
-data Arbolsintactico = Hoja (String,String)|Rama String [Arbolsintactico]|Rama_vacia Sting
-parser_slr_arbol::[(String,String)]->[Int]->[Arbolsintactico]->[Arbolsintactico]
-parser_slr_arbol (x:xs) (y:ys) pila_sem |(busca_accion tabla_acc y (fst x))=="desplazar" = parser_slr_arbol xs ((desplazar_a tabla_acc y (fst x)):y:ys) (Hoja x):pila_sem
+parser_slr_arbol::[(String,String)]->[Int]->[Arbolsintactico]->Arbolsintactico
+parser_slr_arbol (x:xs) (y:ys) pila_sem |(busca_accion tabla_acc y (fst x))=="desplazar" = parser_slr_arbol xs ((desplazar_a tabla_acc y (fst x)):y:ys) ((devolver_hoja x):pila_sem)
                         |(busca_accion tabla_acc y (fst x))=="reducir"  && 
                            (busca_ira tabla_ira (head (dropInt (if((reduce_por tabla_acc y (fst x))!!0=="lambda") then 0 else (length (reduce_por tabla_acc y (fst x)))) (y:ys))) (reduce_a tabla_acc y (fst x)))>0  = 
                                 parser_slr_arbol (x:xs) ((busca_ira tabla_ira (head (dropInt (if((reduce_por tabla_acc y (fst x))!!0=="lambda") then 0 else (length (reduce_por tabla_acc y (fst x)))) (y:ys))) (reduce_a tabla_acc y (fst x))):(if((reduce_por tabla_acc y (fst x))!!0=="lambda") then (y:ys) else (dropInt (length (reduce_por tabla_acc y (fst x))) (y:ys)))) 
-                                                        (if((reduce_por tabla_acc y (fst x))!!0=="lambda") then (Rama_vacia (reduce_a tabla_acc y (fst x))):pila_sem else (Rama (reduce_a tabla_acc y (fst x)) (takeInt (length (reduce_por tabla_acc y (fst x))) pila_sem)):(dropInt (length (reduce_por tabla_acc y (fst x))) pila_sem))
-                        |(busca_accion tabla_acc y (fst x))=="aceptar"   = pila_sem
+                                                        (if((reduce_por tabla_acc y (fst x))!!0=="lambda") then (devolver_rama_vacia (reduce_a tabla_acc y (fst x))):pila_sem else (devolver_rama (reduce_a tabla_acc y (fst x)) (takeInt (length (reduce_por tabla_acc y (fst x))) pila_sem)):(dropInt (length (reduce_por tabla_acc y (fst x))) pila_sem))
+                        |(busca_accion tabla_acc y (fst x))=="aceptar"   = (head pila_sem)

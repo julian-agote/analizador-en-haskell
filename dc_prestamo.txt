@@ -3,5 +3,5 @@
 :Bibliotecario 3:encontrar ejemplar() :Ventana de Prestamos;
 :Ventana de Prestamos 4:encontrar sobre titulo(Titulo) :Ejemplar;
 :Bibliotecario 5:identificar prestatario() :Ventana de Prestamos;
-:Ventana de prestamos 6:encontrar() :Informacion del prestatario;
-:Ventana de prestamos 7:crear(informacion del prestatario,ejemplar) :Prestamo
+:Ventana de Prestamos 6:encontrar() :Informacion del prestatario;
+:Ventana de Prestamos 7:crear(informacion del prestatario,ejemplar) :Prestamo

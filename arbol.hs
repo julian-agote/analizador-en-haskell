@@ -1,4 +1,4 @@
-module Arbol(Arbolsintactico,obtener_regla_aplicable,devolver_ramas,devolver_valor,devolver_hoja,devolver_rama_vacia,devolver_rama) where
+module Arbol(Arbolsintactico,obtener_regla_aplicable,devolver_ramas,devolver_valor,devolver_hoja,devolver_rama_vacia,devolver_rama,devolver_id) where
 import Utilidades
 import Data.Char
 data Arbolsintactico = Hoja (String,String)|Rama String [Arbolsintactico]|Rama_vacia String
@@ -13,9 +13,11 @@ obtener_regla_aplicable (Rama a x)=a++" -> "++(rtrim (parte_izda (reverse x)))
 obtener_regla_aplicable (Hoja (a,b))=a 
 obtener_regla_aplicable (Rama_vacia a)=a++" -> "     
 devolver_ramas::Arbolsintactico->[Arbolsintactico]  
-devolver_ramas (Rama a x) = x
+devolver_ramas (Rama a x) = (reverse x)
 devolver_valor::Arbolsintactico->Int
 devolver_valor (Hoja (a,b))=(convertir_a_entero b)
+devolver_id::Arbolsintactico->String
+devolver_id (Hoja (a,b))=b
 devolver_hoja::(String,String)->Arbolsintactico 
 devolver_hoja (a,b)=(Hoja (a,b))
 devolver_rama_vacia::String->Arbolsintactico

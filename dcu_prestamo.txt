@@ -1,0 +1,1 @@
+{[Bibliotecario],(Devolucion de Ejemplar)}{(Prestar Ejemplar)<usa>(Borrar Reserva)}{[Bibliotecario],(Prestar Ejemplar)}
