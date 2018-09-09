@@ -1,6 +1,6 @@
 irudia
-MOZKETA BIRAKETA ISLAPENA LEKU_ALDATZEA ID ESLEI P_Z P_X P_Y P_B P_C P_D P_F P_G P_H ZENB P_IRE P_ITXI P_COMA G_IRE G_ITXI
-irudia transformatu aldaketa_segida aldaketa posizio_bektorea posizio_bektore_multsoa lerroak bolumena elementua ardatza
+MOZKETA BIRAKETA ISLAPENA LEKU_ALDATZEA ID ESLEI P_Z P_X P_Y P_B P_C P_D P_F P_G P_H ZENB P_IRE P_ITXI P_COMA G_IRE G_ITXI ARDATZAREN_INGURUKO_BIRAKETA ZATIHIP ZATIPAR SPLINE
+irudia transformatu aldaketa_segida aldaketa posizio_bektorea posizio_bektore_multsoa lerroak bolumena elementua ardatza kurba lista_id rlista_id
 irudia -> bolumena P_COMA transformatu
 bolumena -> ID G_IRE posizio_bektore_multsoa G_ITXI lerroak
 transformatu -> ID ESLEI ID aldaketa_segida
@@ -9,7 +9,8 @@ aldaketa_segida -> lambda
 aldaketa -> MOZKETA elementua ZENB
 aldaketa -> BIRAKETA ardatza ZENB
 aldaketa -> ISLAPENA ardatza
-aldaketa -> LEKU_ALDATZEA ardatza ZENB
+aldaketa -> LEKU_ALDATZEA posizio_bektorea
+aldaketa -> ARDATZAREN_INGURUKO_BIRAKETA posizio_bektorea posizio_bektorea ZENB
 ardatza -> P_X
 ardatza -> P_Y
 ardatza -> P_Z
@@ -19,8 +20,15 @@ elementua -> P_D
 elementua -> P_F
 elementua -> P_G
 elementua -> P_H
-lerroak -> P_IRE ID ID P_ITXI lerroak
+lerroak -> P_IRE ID ID kurba P_ITXI lerroak
+lerroak -> SPLINE lista_id lerroak
 lerroak -> lambda
 posizio_bektore_multsoa -> posizio_bektorea posizio_bektore_multsoa
 posizio_bektore_multsoa -> lambda
 posizio_bektorea -> ID P_IRE ZENB ZENB ZENB ZENB P_ITXI
+kurba -> ZATIHIP ZENB ZENB aldaketa_segida
+kurba -> ZATIPAR ZENB aldaketa_segida
+kurba -> lambda
+lista_id -> ID rlista_id
+rlista_id -> ID rlista_id
+rlista_id -> lambda
