@@ -10,9 +10,12 @@ palabra_clave x |(x=="mozketa")="MOZKETA"
                 |(x=="hiperbola")="ZATIHIP"
                 |(x=="parabola")="ZATIPAR"
                 |(x=="spline")="SPLINE"
+                |(x=="bezier")="BEZIER"
+                |(x=="bspline")="BSPLINE"
+                |(x=="biratu")="BIRATU_OSOA"
 buscaSigToken::String->String->(String,String)
 buscaSigToken "" "" =("$","")
-buscaSigToken "" y = if((ord(head y)>=ord('0') && ord(head y)<=ord('9'))||ord(head y)==ord('-')) then ("ZENB",y) else if (rtrim y)`elem` ["mozketa","biraketa","islapena","leku_aldatzea","hautazko_ardatz_baten_inguruko_biraketa","hiperbola","parabola","spline"] then ((palabra_clave (rtrim y)),(rtrim y)) else ("ID",y)
+buscaSigToken "" y = if((ord(head y)>=ord('0') && ord(head y)<=ord('9'))||ord(head y)==ord('-')) then ("ZENB",y) else if (rtrim y)`elem` ["mozketa","biraketa","islapena","leku_aldatzea","hautazko_ardatz_baten_inguruko_biraketa","hiperbola","parabola","spline","bezier","bspline","biratu"] then ((palabra_clave (rtrim y)),(rtrim y)) else ("ID",y)
 buscaSigToken x y |((head x)=='\n'||(head x)==' ') && (trim y)==""=(buscaSigToken  (tail x) "")
                   |(substr x 1 2)=="//" && (trim y)==""=buscaSigToken (substr x 3 (length x)) (y++(substr x 1 2))
                   |(head x)/='\n' && (trim y)/="" && (head y)=='/'=buscaSigToken (substr x 2 (length x)) (y++(substr x 1 1))
@@ -34,7 +37,7 @@ buscaSigToken x y |((head x)=='\n'||(head x)==' ') && (trim y)==""=(buscaSigToke
                   |(substr x 1 2)=="h " && (trim y)==""=("P_H",(substr x 1 1))
                   |(null y ||(head y)`elem` (['a'..'z']++['A'..'Z']))&&((ord(head x)>=ord('a') && ord(head x)<=ord('z'))||(ord(head x)>=ord('A') && ord(head x)<=ord('Z'))||(ord(head x)>=ord('0') && ord(head x)<=ord('9'))||(head x)=='-'||(head x)=='_')=buscaSigToken (substr x 2 (length x)) (y++(substr x 1 1))
                   |(null y ||(head y)`elem` ['0'..'9']||ord(head y)==ord('-'))&&((ord(head x)>=ord('0') && ord(head x)<=ord('9'))||ord(head x)==ord('.')||ord(head x)==ord('-'))=buscaSigToken (substr x 2 (length x)) (y++(substr x 1 1))
-                  |otherwise = if((ord(head y)>=ord('0') && ord(head y)<=ord('9'))||ord(head y)==ord('-')) then ("ZENB",y) else if (rtrim y)`elem` ["mozketa","biraketa","islapena","leku_aldatzea","hautazko_ardatz_baten_inguruko_biraketa","hiperbola","parabola","spline"] then ((palabra_clave (rtrim y)),(rtrim y)) else ("ID",y)
+                  |otherwise = if((ord(head y)>=ord('0') && ord(head y)<=ord('9'))||ord(head y)==ord('-')) then ("ZENB",y) else if (rtrim y)`elem` ["mozketa","biraketa","islapena","leku_aldatzea","hautazko_ardatz_baten_inguruko_biraketa","hiperbola","parabola","spline","bezier","bspline","biratu"] then ((palabra_clave (rtrim y)),(rtrim y)) else ("ID",y)
 sigToken::String->(String,String)
 sigToken "" = ("$","")
 sigToken x = (buscaSigToken x "")
