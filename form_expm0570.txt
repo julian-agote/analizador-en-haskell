@@ -1,2 +1,0 @@
-expm0570 "Gestión tramitación digital certificados" asignaparam (TipoDeCertificacion e t, NumDocumento e t, centro e t, plan e t, FechaEmisionDesde e, FechaEmisionHasta e,EstadoCertificacion e f) v-b "se obligará a informar uno de estos 3 campos: Num. Documento, centro o plan", 
-tramites_certificacion (NumDocumento s,TipoCertificado s,FechaSolicitud s,EstadoCertificado s,FechaEmision s,FechaEnvio s,FechaImpresion s,Centro s,Plan s,Estudiante s,e-mail s) v-r "habilitar el boton de tramitar si csv_certificado no es nulo y el estado tramite es <> F"

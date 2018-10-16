@@ -1,2 +1,0 @@
-Ejemplar "objeto de negocio" -id:Integer ; +encontrar_sobre_titulo +crear +destruir asoc 0..* "copia de"
-Titulo "objeto de negocio" -nombre:String -autor:String -isbn:String -numero_de_reserva ; +encontrar +crear +destruir
