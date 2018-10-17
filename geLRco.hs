@@ -247,4 +247,3 @@ main = do
         --writeFile f2 (concat (showElemento (calc_colec_slr term var prod axioma [Elemento {numero = 1,conjunto = (cerradura term var prod axioma ((PIzda ("P"++axioma),Pdcha [".",axioma]):[]))}])))
         writeFile f2 (generar_parser axioma term var prod (calc_colec_slr term var prod axioma [Elemento {numero = 1,conjunto = cerradura term var prod axioma ((PIzda ("P"++axioma),Pdcha [".",axioma]):[])}]) (capitalize (devuelve_nombre f2)))
         hClose h1
-                                                            

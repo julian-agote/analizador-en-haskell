@@ -1,3 +1,4 @@
 // hurrengo kuboaren F puntutik eta dagokion diagonalaren beste muturretik igarotzen den ardatz lokalaren inguruan -45 biratu nahi dugu
-X [A (2 1 2 1) B (3 1 2 1) C (3 1.5 2 1) D (2.5 2 2 1) E (2 2 2 1) F (2 1 1 1) G (3 1 1 1) H (3 2 1 1) I (2 2 1 1) J (3 2 1.5 1)] (A B) (A E) (A F) (B C) (B G)
-(C D) (C J) (D E) (D J) (E I) (F G) (F I) (G H) (H I) (H J); XP = X hautazko_ardatz_baten_inguruko_biraketa P0 (2 1 1 1) P1 (3 2 2 1) -45
+X [A (2 1 2 1) B (3 1 2 1) C (3 1.5 2 1) D (2.5 2 2 1) E (2 2 2 1) F (2 1 1 1) G (3 1 1 1) H (3 2 1 1) I (2 2 1 1) J (3 2 1.5 1)] spline A B G F 
+(A E) (A F) (B C) (C D) (C J) (D E) (D J) (E I) (F I) (G H) (I H parabola 1 leku_aldatzea I (2 2 1 1) biraketa z 10) (H J); XP = X hautazko_ardatz_baten_inguruko_biraketa P0 (2 1 1 1) P1 (3 2 2 1) -45
+>>>>>>> julian-agote-patch-1
