@@ -1,26 +1,23 @@
-# analizador-en-haskell
-Este es un intento de crear un analizador sintáctico (generador de analizadores sintacticos ascendentes) en haskell
-El fichero principal para el generador se llama: parser_asc.hs, recibe de la linea de comandos por un lado el nombre de un fichero con la gramatica y por otro el nombre del fichero en el cual se escribirá el analizador para la gramatica leida.
-Ejemplo de un fichero que contiene una gramatica es grama_logica_1er_orden.txt, partiendo del cual se genera otro, con codigo haskell, en el ejemplo par_log_1er_orden.hs.
-En este ultimo para la gramatica leida estan las tablas de accion e ir_a necesarias en el funcionamiento de un analizador ascendente.
-A continuacion en el codigo de par_log_1er_orden.hs se ha añadido todo lo necesario para las acciones semanticas. 
-Quizas seria mas correcto tener dos ficheros separados, uno con las tablas para el analizador, por si hubiera cambios en la gramatica y otro en donde irian las acciones semanticas, que de esta forma no se perderian en caso de tener que rehacer nuevamente las tablas (las tablas van embebidas en el fichero) por haberse cambiado la gramatica.
-A continuacion voy a tratar de describir un poco como esta estructurado parser_asc.hs:
-  a partir del axioma terminales variables y producciones leidas del fichero de la gramatica obtiene la coleccion canonica de conjuntos de elementos para una gramatica aumentada, con la funcion calc_colec_slr. Para ello se inicializa la coleccion de la manera: [Elemento {numero = 1,conjunto = cerradura t v p axioma ((PIzda ("P"++axioma),Pdcha [".",axioma]):[])}].
-  esta va a usar una funcion ir_a donde para cada conjunto de elementos y simbolo de la gramatica va a ayudar a obtener un automata determinista que reconozca todos los prefijos viables validos.
-El fichero que se genera con el analizador tiene las siguientes funciones:
-Primero tabla_acc y tabla_ira en donde va a estar representado el automata determinista que hablabamos
-busca_ira y busca_accion que buscan en las anteriores estructuras la operacion de accion que hay que hacer para el estado en la cima de la pila y el terminal leido
-Si es la accion a ejecutar es "desplazar" se llama a la funcion desplazar_a que introduce en la pila el siguiente estado (sig_estado) que se indica en la operacion de accion y se avanza en la lectura de la entrada
-Si la accion es "reducir" la cadena de entrada permanece igual, pero se eliminan de la pila tantos elementos como la longitud de la regla por la que se reduce, ademas de insertar en la pila en estado que indica busca_ira para el estado que queda en la cima de la pila y la variable izquierda de la regla por la que se reduce
-Para eliminar elementos de la pila, se hace:
-    (dropInt (length (reduce_por tabla_acc y (fst x))) (y:ys)) en donde reduce_por devuelve la parte derecha de la regla por la que se reduce, length devuelve la longitud de esa parte derecha y dropInt elimina de la pila (y:ys) tantos elementos como indica length
-    despues se introduce en la pila es estado que indica la funcion busca_ira para el estado en la cabecera de la pila y la variable en la parte izquierda de la regla que devuelve (reduce_a tabla_acc y (fst x)), la secuencia de llamadas completa es:
-    ((busca_ira tabla_ira (head (dropInt (if((reduce_por tabla_acc y (fst x))!!0=="lambda") then 0 else (length (reduce_por tabla_acc y (fst x)))) (y:ys))) (reduce_a tabla_acc y (fst x))):(if((reduce_por tabla_acc y (fst x))!!0=="lambda") then (y:ys) else (dropInt (length (reduce_por tabla_acc y (fst x))) (y:ys)))) 
-En el fichero generado falta la funcion que lea el siguiente token de la entrada, una posible secuencia de llamada seria:
-main:: IO ()
-main = do
-        putStrLn "Introduce una cadena:"
-        y <- getLine
-        putStrLn (parser_slr (sigToken y) [1])
-El siguiente paso consiste como indicaba arriba en que el fichero del analizador generado sea en forma de modulo (se cargara con import Analizador) para separar por un lado la parte de analisis y por otro la parte de ejecucion de las acciones semanticas. Va a tener dos funciones externas parser_slr, para comprobar se lee correctamente la entrada y parser_slr_arbol que devuelve un arbol sintactico de la entrada. Se espera a partir de esta representacion intermedia poder luego ejecutar las acciones semanticas. Como se ve en la llamada de arriba sigToken que va a estar en un modulo aparte devuelve una lista con los tokens que forman la entrada.
+Hemen agertzen diren programak, haskell-en idatzitako interprete txiki batenak dira. Interprete honek, marrazkietan aldaketak adierazten dituen (asmatutako gramatikatik) fitxategi batetik (adibidez prog_bspline.txt), matlab-en idatzitako programak ateratzen ditu, eta marrazkiak egiteko erabiltzen da. Helburua aipatu dugun interpretearen laguntzarekin, infografiara-ko frogak egitea da. Kurba desberdinak probatu, aldaketak egin definitutako kurba eta lerroetan. Jarraipena badut gainazalak gehituz eta abar.
+Hurrengo programak exekutatzeko jarraitu behar diren pausuak, nik behintzat hurrengo komandoak erabiltzen ditut:
+(aurretik haskell compiladore bat instalatuta eduki behar da https://www.haskell.org/downloads)
+Behin haskellen interpretea martxan jarrita, lehenengotik mugitu behar da gure programak dauden disko gogorreko direktoriora (:cd )
+GHCi, version 8.0.1: http://www.haskell.org/ghc/  :? for help
+Prelude> :cd D:\trabajo\haskell
+Prelude>
+Gero mementoan dudan gramatikarako (grama_trans.txt) parser-a lortu behar da, horretarako geLRco.hs egikaritu behar da, parametro zuzenak pasatuz. Komandoak hurrengoak dira:
+Prelude> :set args ["grama_trans.txt","parser_trans.hs"]
+Prelude> :load geLRco
+[2 of 2] Compiling Main             ( geLRco.hs, interpreted )
+Ok, modules loaded: Utilidades (Utilidades.o), Main.
+*Main> main
+Orain gure gramatikarako parser-a badaukagu (analizatzaile sintaktikoa), falta zaiguna eskaner-a scaner_trans.hs gure aldetik idatzita, tokenak lortzeko eta erregela semantikoen programa, hemen deitu diodana prueba_parser_trans.hs. Azken hau irakurtzen du gure gramatikan idatzitako programak (adibidez prog_bspline.txt) eta matlab-era itzulitakoak ateratzen du (aldaketak_bspline.m). Kasu onetan ez ditut parametroen bidez izenak pasatzen, zuzenean prueba_parser_trans.hs daude kodetuta. 
+Beraz azkenengo komandoa hurrengoa izango da:
+*Main> :load prueba_parser_trans
+[3 of 5] Compiling Scaner_trans     ( Scaner_trans.hs, interpreted )
+[4 of 5] Compiling Parser_trans     ( Parser_trans.hs, interpreted )
+[5 of 5] Compiling Main             ( prueba_parser_trans.hs, interpreted )
+Ok, modules loaded: Utilidades (Utilidades.o), Main, Parser_trans, Arbol (Arbol.
+o), Scaner_trans.
+*Main> main
+Orain joan daiteke bilatzera gure direktorioan matlab-eko fitxategia (aldaketak_bspline.m).
